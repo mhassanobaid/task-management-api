@@ -2,6 +2,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const errorMiddleware = require("./middleware/errorMiddleware");
 require("dotenv").config();
 
 const app = express();
@@ -19,6 +20,8 @@ app.get("/", (req, res) => {
     message: "Task Management API is running 🚀",
   });
 });
+
+app.use(errorMiddleware);
 
 const startServer = async ()=>{
   // Connect to MongoDB
