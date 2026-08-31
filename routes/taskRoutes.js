@@ -26,6 +26,7 @@ router.get("/:id", getTask);
 
 // UPDATE
 router.put("/:id", updateTask);
+router.patch("/:id", updateTask);
 
 // DELETE
 router.delete("/:id", deleteTask);

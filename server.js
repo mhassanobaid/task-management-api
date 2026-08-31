@@ -21,6 +21,14 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use((req, res, next) => {
+  const error = new Error(`Route nott found: ${req.method} ${req.originalUrl}`);
+
+  error.statusCode = 404;
+
+  next(error);
+});
+
 app.use(errorMiddleware);
 
 const startServer = async ()=>{

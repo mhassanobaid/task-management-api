@@ -72,16 +72,32 @@ const updateTask = async (req, res, next) => {
   try {
     const { title, description, completed } = req.body;
 
+    const updates = {};
+
+    if (title !== undefined) {
+      updates.title = title;
+    }
+
+    if (description !== undefined) {
+      updates.description = description;
+    }
+
+    if (completed !== undefined) {
+      updates.completed = completed;
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({
+        message: "At least one field is required for update",
+      });
+    }
+
     const task = await Task.findOneAndUpdate(
       {
         _id: req.params.id,
         user: req.user.userId,
       },
-      {
-        title,
-        description,
-        completed,
-      },
+      updates,
       {
         new: true,
         runValidators: true,
